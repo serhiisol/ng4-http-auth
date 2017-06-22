@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from 'ng4-http';
+
+import { AuthenticationModule } from './shared';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    HttpModule,
+    AuthenticationModule,
+    AppRoutingModule
+  ],
+  declarations: [
+    AppComponent
+  ],
+  bootstrap: [
+    AppComponent
+  ]
+})
+export class AppModule { }

@@ -1,0 +1,30 @@
+import { NgModule } from '@angular/core';
+import {
+  AuthModule,
+  AUTH_SERVICE,
+  PUBLIC_FALLBACK_PAGE_URI,
+  PROTECTED_FALLBACK_PAGE_URI
+ } from 'ng4-auth';
+
+import { TokenStorage } from './token-storage.service';
+import { AuthenticationService } from './authentication.service';
+
+import { factory } from './authentication.factory';
+
+@NgModule({
+    imports: [ AuthModule ],
+    providers: [
+      TokenStorage,
+      AuthenticationService,
+      { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
+      { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
+      {
+        provide: AUTH_SERVICE,
+        deps: [AuthenticationService],
+        useFactory: factory
+      }
+    ]
+})
+export class AuthenticationModule {
+
+}
