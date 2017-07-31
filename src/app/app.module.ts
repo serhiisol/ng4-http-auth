@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from 'ng4-http';
 
 import { AuthenticationModule } from './shared';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 @NgModule({
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     AuthenticationModule,
     AppRoutingModule
   ],

@@ -1,30 +1,30 @@
 import * as express from 'express';
 import { Response as Res } from 'express';
-import {
-  Response, Params, Controller, Get, Post,
-  bootstrapControllers, Middleware
-} from '@decorators/express';
-
-let passRequest = false;
+import { Response, Controller, Get, Post, attachControllers } from '@decorators/express';
 
 @Controller('/')
 class UsersController {
+
+  private passUsers = false;
+  private passData = false;
+
   @Post('/login')
-  login(@Response() res) {
-    res.send({ accessToken: 'access-token', refreshToken: 'refresh-token' });
+  public login(@Response() res): void {
+    res.send(this.generateTokens());
   }
 
   @Post('/refresh')
-  refresh(@Response() res) {
-    this.login(res);
+  public refresh(@Response() res): void {
+    // emulate long request
+    setTimeout(() => res.send(this.generateTokens()), 1000);
   }
 
-  @Get('/data')
-  getData(@Response() res: Res) {
-    passRequest = !passRequest;
+  @Get('/users')
+  public getUsers(@Response() res: Res): void {
+    this.passUsers = !this.passUsers;
 
-    if (passRequest) {
-      return res.send([
+    if (this.passUsers) {
+      res.send([
           {
               'id': 1,
               'name': 'John Doe'
@@ -34,9 +34,38 @@ class UsersController {
               'name': 'Jane Doe'
           }
       ]);
+    } else {
+      res.status(401).send();
+    }
+  }
+
+  @Get('/data')
+  public getData(@Response() res: Res): void {
+    this.passData = !this.passData
+
+    if (this.passData) {
+      res.send([
+        {
+            'id': 1,
+            'name': 'Pepsi'
+        },
+        {
+            'id': 2,
+            'name': 'Coca-Cola'
+        }
+      ]);
+    } else {
+      // emulate long request
+      setTimeout(() => res.status(401).send(), 300);
     }
 
-    return res.status(401).send();
+  }
+
+  private generateTokens() {
+    return {
+      accessToken: 'access-token-' + Math.random(),
+      refreshToken: 'access-token-' + Math.random()
+    };
   }
 
 }
@@ -44,7 +73,7 @@ class UsersController {
 const app = express();
 
 app.use((
-  req: express.Request,
+  _req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
@@ -54,9 +83,10 @@ app.use((
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
   next();
-}
-);
+});
 
+attachControllers(app, [
+  { provide: UsersController, deps: [] }
+]);
 
-bootstrapControllers(app, [ { provide: UsersController, deps: []} ]);
 app.listen(3000);

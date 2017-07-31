@@ -4,12 +4,14 @@ import {
   AUTH_SERVICE,
   PUBLIC_FALLBACK_PAGE_URI,
   PROTECTED_FALLBACK_PAGE_URI
- } from 'ng4-auth';
+ } from 'ngx-auth';
 
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 
-import { factory } from './authentication.factory';
+export function factory(authenticationService: AuthenticationService) {
+  return authenticationService;
+}
 
 @NgModule({
     imports: [ AuthModule ],
@@ -20,7 +22,7 @@ import { factory } from './authentication.factory';
       { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
       {
         provide: AUTH_SERVICE,
-        deps: [AuthenticationService],
+        deps: [ AuthenticationService ],
         useFactory: factory
       }
     ]

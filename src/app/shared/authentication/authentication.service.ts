@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Http } from 'ng4-http';
-import { AuthService } from 'ng4-auth';
+import { AuthService } from 'ngx-auth';
 
-import { environment } from '../../../environments';
 import { TokenStorage } from './token-storage.service';
 
 interface AccessData {
@@ -16,7 +14,7 @@ interface AccessData {
 export class AuthenticationService implements AuthService {
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
     private tokenStorage: TokenStorage
   ) {}
 
@@ -54,7 +52,6 @@ export class AuthenticationService implements AuthService {
       .switchMap((refreshToken: string) => {
         return this.http.post(`http://localhost:3000/refresh`, { refreshToken });
       })
-      .map(response => response.json())
       .do(this.saveAccessData.bind(this))
       .catch((err) => {
         this.logout();
@@ -70,12 +67,8 @@ export class AuthenticationService implements AuthService {
    * @param {Response} response
    * @returns {boolean}
    */
-  public refreshShouldHappen(response: Response): boolean {
-    if (response instanceof Response) {
-      return response.status === 401;
-    }
-
-    return false;
+  public refreshShouldHappen(response: HttpErrorResponse): boolean {
+    return response.status === 401
   }
 
   /**
@@ -94,8 +87,7 @@ export class AuthenticationService implements AuthService {
 
   public login(): Observable<any> {
     return this.http.post(`http://localhost:3000/login`, { })
-    .map(res => res.json())
-    .do((tokens) => this.saveAccessData(tokens));
+    .do((tokens: AccessData) => this.saveAccessData(tokens));
   }
 
   /**

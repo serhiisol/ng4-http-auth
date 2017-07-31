@@ -10,7 +10,8 @@ import { DataService, AuthenticationService } from '../shared';
 })
 export class DashboardComponent {
 
-  public data: Observable<any>;
+  public users$: Observable<any>;
+  public data$: Observable<any>;
 
   constructor(
     private router: Router,
@@ -19,7 +20,8 @@ export class DashboardComponent {
   ) { }
 
   public loadData() {
-    this.data = this.dataService.getUsers();
+    this.users$ = this.dataService.getUsers();
+    this.data$ = this.dataService.getData();
   }
 
   public logout() {
