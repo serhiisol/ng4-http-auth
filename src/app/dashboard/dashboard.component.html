@@ -2,8 +2,16 @@
   This is protected area!
 </p>
 
+<h4>Users:</h4>
 <ul>
-  <li *ngFor="let user of data | async">
+  <li *ngFor="let user of users$ | async">
+    {{ user.name }}
+  </li>
+</ul>
+
+<h4>Data:</h4>
+<ul>
+  <li *ngFor="let user of data$ | async">
     {{ user.name }}
   </li>
 </ul>
