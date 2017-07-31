@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http } from 'ng4-http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     getUsers() {
-        return this.http.get('http://localhost:3000/data')
-            .map(res => res.json());
+        return this.http.get('http://localhost:3000/users');
     }
 
 }
