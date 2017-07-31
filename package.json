@@ -1,5 +1,5 @@
 {
-  "name": "ngx-http-auth",
+  "name": "ngx-auth-example",
   "version": "2.0.0",
   "license": "MIT",
   "author": {
@@ -22,7 +22,7 @@
     "core-js": "2.4.1",
     "rxjs": "5.4.2",
     "zone.js": "0.8.16",
-    "ng4-auth": "serhiisol/ng4-auth#ngx-auth-2.0.0",
+    "ngx-auth": "2.0.0",
     "@decorators/express":"1.3.0"
   },
   "devDependencies": {
