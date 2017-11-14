@@ -1,0 +1,20 @@
+{
+  "name": "ngx-auth-example-server",
+  "version": "3.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Serhii Sol",
+    "email": "sergeysolonko@gmail.com"
+  },
+  "scripts": {
+    "start": "tsc && node server"
+  },
+  "dependencies": {
+    "@decorators/express":"^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.91",
+    "@types/express": "^4.0.39",
+    "typescript": "^2.6.1"
+  }
+}

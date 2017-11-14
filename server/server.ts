@@ -1,7 +1,9 @@
 import * as express from 'express';
 import { Response as Res } from 'express';
 import { Response, Controller, Get, Post, attachControllers } from '@decorators/express';
+import { Injectable } from '@decorators/di';
 
+@Injectable()
 @Controller('/')
 class UsersController {
 
@@ -86,7 +88,7 @@ app.use((
 });
 
 attachControllers(app, [
-  { provide: UsersController, deps: [] }
+  UsersController
 ]);
 
 app.listen(3000);
