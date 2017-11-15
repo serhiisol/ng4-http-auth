@@ -7,7 +7,7 @@
     "email": "sergeysolonko@gmail.com"
   },
   "scripts": {
-    "start": "tsc && node server"
+    "start": "tsc && node ."
   },
   "dependencies": {
     "@decorators/express":"^2.0.0"
