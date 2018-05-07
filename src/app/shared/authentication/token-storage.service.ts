@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class TokenStorage {
@@ -10,7 +10,7 @@ export class TokenStorage {
    */
   public getAccessToken(): Observable<string> {
     const token: string = <string>localStorage.getItem('accessToken');
-    return Observable.of(token);
+    return of(token);
   }
 
   /**
@@ -19,7 +19,7 @@ export class TokenStorage {
    */
   public getRefreshToken(): Observable<string> {
     const token: string = <string>localStorage.getItem('refreshToken');
-    return Observable.of(token);
+    return of(token);
   }
 
   /**

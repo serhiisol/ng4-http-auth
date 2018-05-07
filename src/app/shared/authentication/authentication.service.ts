@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 
 import { TokenStorage } from './token-storage.service';
@@ -27,7 +28,7 @@ export class AuthenticationService implements AuthService {
   public isAuthorized(): Observable < boolean > {
     return this.tokenStorage
       .getAccessToken()
-      .map(token => !!token);
+      .pipe(map(token => !!token));
   }
 
   /**
@@ -46,18 +47,20 @@ export class AuthenticationService implements AuthService {
    * can execute pending requests or retry original one
    * @returns {Observable<any>}
    */
-  public refreshToken(): Observable < AccessData > {
+  public refreshToken(): Observable <AccessData> {
     return this.tokenStorage
       .getRefreshToken()
-      .switchMap((refreshToken: string) => {
-        return this.http.post(`http://localhost:3000/refresh`, { refreshToken });
-      })
-      .do(this.saveAccessData.bind(this))
-      .catch((err) => {
-        this.logout();
+      .pipe(
+        switchMap((refreshToken: string) =>
+          this.http.post(`http://localhost:3000/refresh`, { refreshToken })
+        ),
+        tap((tokens: AccessData) => this.saveAccessData(tokens)),
+        catchError((err) => {
+          this.logout();
 
-        return Observable.throw(err);
-      });
+          return Observable.throw(err);
+        })
+      );
   }
 
   /**
@@ -87,7 +90,7 @@ export class AuthenticationService implements AuthService {
 
   public login(): Observable<any> {
     return this.http.post(`http://localhost:3000/login`, { })
-    .do((tokens: AccessData) => this.saveAccessData(tokens));
+    .pipe(tap((tokens: AccessData) => this.saveAccessData(tokens)));
   }
 
   /**
