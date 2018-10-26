@@ -7,5 +7,8 @@ This project just a demo for library ngx-auth.
 ## Run
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`.
-Also to run server, which is required for demo run following command:
-```npm run server```. It will start demo server
+
+Also to run server, which is required for demo:
+1. Navigate to the `server` folder.
+2. Install all dependencies via `npm i`
+3. Run server (it will also compile it) via `npm start`.
