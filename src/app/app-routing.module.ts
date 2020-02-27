@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: 'login',
     canActivate: [ PublicGuard ],
-    loadChildren: './login/login.module#LoginModule'
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
   },
   {
     path: 'dashboard',
     canActivate: [ ProtectedGuard ],
-    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: '',

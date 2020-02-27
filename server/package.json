@@ -1,20 +1,22 @@
 {
   "name": "ngx-auth-example-server",
-  "version": "3.0.0",
+  "version": "5.3.0",
   "license": "MIT",
   "author": {
     "name": "Serhii Sol",
     "email": "sergeysolonko@gmail.com"
   },
   "scripts": {
-    "start": "tsc && node ."
+    "start": "ts-node ."
   },
   "dependencies": {
-    "@decorators/express":"^2.0.0"
+    "@decorators/di": "^1.0.2",
+    "@decorators/express": "^2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^6.0.91",
-    "@types/express": "^4.0.39",
-    "typescript": "^2.6.1"
+    "@types/node": "^13.7.6",
+    "@types/express": "^4.17.2",
+    "typescript": "^3.8.2",
+    "ts-node": "^8.6.2"
   }
 }
